@@ -1,0 +1,14 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    flex: 0 1 60%;
+    min-width: 400px;
+}
+
+.buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 20px 0;
+}

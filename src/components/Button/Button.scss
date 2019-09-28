@@ -1,0 +1,18 @@
+@import '../../scss/base';
+
+.Button {
+    background: $white;
+    border: 3px solid $dark-grey;
+    box-shadow: 2px 2px 4px 0 rgba($dark-grey, 0.5);
+    border-radius: 12px;
+    font-size: 24px;
+    color: $dark-grey;
+    text-align: center;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1 1 33%;
+    box-sizing: border-box;
+}
