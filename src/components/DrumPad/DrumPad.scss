@@ -1,6 +1,6 @@
 @import '../../scss/base';
 
-.Button {
+.drum-pad {
     background: $white;
     border: 3px solid $dark-grey;
     box-shadow: 2px 2px 4px 0 rgba($dark-grey, 0.5);
@@ -15,4 +15,12 @@
     align-items: center;
     flex: 1 1 33%;
     box-sizing: border-box;
+}
+
+.DrumPad:hover {
+    cursor: pointer;
+}
+
+.DrumPad:focus {
+    outline: 0;
 }

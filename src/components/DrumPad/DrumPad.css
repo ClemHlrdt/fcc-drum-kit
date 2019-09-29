@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans&display=swap");
-.Button {
+.drum-pad {
   background: #ecf0f1;
   border: 3px solid #34495e;
   -webkit-box-shadow: 2px 2px 4px 0 rgba(52, 73, 94, 0.5);
@@ -25,4 +25,12 @@
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
 }
-/*# sourceMappingURL=Button.css.map */
+
+.DrumPad:hover {
+  cursor: pointer;
+}
+
+.DrumPad:focus {
+  outline: 0;
+}
+/*# sourceMappingURL=DrumPad.css.map */
