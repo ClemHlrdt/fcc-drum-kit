@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Display from '../Display/Display';
 import DrumPad from '../DrumPad/DrumPad';
 import './Drumkit.css';
 
@@ -19,35 +18,68 @@ class Drumkit extends Component {
         super(props);
         this.state = {
             display: 'Press a key...',
+            recording: false,
             sequence: []
         }
     }
 
-    handleClick = name => this.setState({ display: name })
+    handleClick = sound => {
+        // if recording, display & save name
+        //console.log(sound);
+        if(this.state.recording) {
+            this.setState({
+                display: sound.id,
+                sequence: this.state.sequence.concat(sound)
+            })
+        } else {
+        // else display
+            this.setState({
+                display:sound.id
+            })
+        }
+        
+    }
 
+    handleRecording = () => {
+        this.setState(prevState => ({
+            recording: !prevState.recording
+        }))
+    }
     componentDidMount(){
-        this.handlePlay();
+        //this.handlePlay();
     }
-    handlePlay = () => {
-        var audio = new Audio(),
-            i = 0;
-        var playlist = new Array('');
 
-        audio.addEventListener('ended', function () {
-            i = ++i < playlist.length ? i : 0;
-            console.log(i)
-            audio.src = playlist[i];
+    handlePlay = () => {
+        var playlist = this.state.sequence;
+        if(this.state.sequence.length > 0){
+            let audio = new Audio();
+            audio.src = playlist[0].src;
+            console.log(audio.src);
+            let index = 1;
+            audio.currentTime = 0;
             audio.play();
-        }, true);
-        audio.volume = 0.3;
-        audio.loop = false;
-        audio.src = playlist[0];
-        audio.play();
+            audio.onended = function () {
+                if (index < playlist.length) {
+                    audio.src = playlist[index].src;
+                    audio.currentTime = 0;
+                    audio.play();
+                    index++;
+                }
+            };
+        } else {
+            console.log('Empty array');
+        }
     }
+
+    handleStop = () => {
+        this.setState({sequence: []})
+    }
+
     render() {
+        const {recording} = this.state;
         return (
-            <div>
-                <div className="container">
+            <div className="container">
+                <div >
                     <div className="display" id="display">{this.state.display}</div>
                 </div>
                 <div className="buttons" id="drum-pads">
@@ -62,6 +94,17 @@ class Drumkit extends Component {
 
                         </DrumPad>
                     ))}
+                    
+                    <div className="button" onClick={this.handleRecording}>
+                        <span className={`dot ${recording ? "recording" : ""}`}></span>
+                    </div>
+                    <div className="button" onClick={this.handlePlay}>
+                        <i className="fas fa-play"></i>
+                    </div>
+                    <div className="button" onClick={this.handleStop}>
+                        <i className="fas fa-stop"></i>
+                    </div>
+                    
                 </div>
             </div>
         );
