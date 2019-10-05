@@ -49,26 +49,24 @@ class Drumkit extends Component {
         //this.handlePlay();
     }
 
-    handlePlay = () => {
-        var playlist = this.state.sequence;
-        if(this.state.sequence.length > 0){
-            let audio = new Audio();
-            audio.src = playlist[0].src;
-            console.log(audio.src);
-            let index = 1;
-            audio.currentTime = 0;
-            audio.play();
-            audio.onended = function () {
-                if (index < playlist.length) {
-                    audio.src = playlist[index].src;
-                    audio.currentTime = 0;
-                    audio.play();
-                    index++;
-                }
-            };
-        } else {
-            console.log('Empty array');
+    playSequence = () => {
+        let sounds = [...this.state.sequence];
+        const playNextSounds = (sounds) => {
+            if(sounds.length > 0){
+                const audio = new Audio();
+                console.log(sounds);
+                audio.src = sounds[0].src;
+                audio.currentTime = 0;
+                audio.play();
+                sounds.shift();
+                audio.addEventListener('ended', function(){
+                    return playNextSounds(sounds);
+                })
+            } 
         }
+        playNextSounds(sounds);
+        
+
     }
 
     handleStop = () => {
@@ -98,7 +96,7 @@ class Drumkit extends Component {
                     <div className="button" onClick={this.handleRecording}>
                         <span className={`dot ${recording ? "recording" : ""}`}></span>
                     </div>
-                    <div className="button" onClick={this.handlePlay}>
+                    <div className="button" onClick={this.playSequence}>
                         <i className="fas fa-play"></i>
                     </div>
                     <div className="button" onClick={this.handleStop}>
